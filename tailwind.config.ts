@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         spaceblack: '#212121',
+        royal: '#006aff'
       }
     },
   },

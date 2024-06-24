@@ -18,7 +18,9 @@ export function Sidebar() {
         {links.map((link, i) => (
           <Link key={i} href={link.href}>
             <li 
-              className={`${pathname === link.href 
+              className={`${
+                (link.href === '/' && pathname === '/') ||
+                (link.href !== '/' && pathname.startsWith(link.href)) 
                 ? 'text-spaceblack bg-gray-50'
                 : 'text-gray-500 hover:text-spaceblack hover:bg-gray-100 border-transparent hover:border-gray-100'
               } flex items-center gap-3 rounded-[10px] p-[10px] border transition-colors`}

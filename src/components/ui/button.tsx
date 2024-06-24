@@ -5,7 +5,8 @@ const button = tv({
   base: 'inline-flex items-center justify-center font-medium rounded-[10px] transition-colors',
   variants: {
     color: {
-      primary: 'bg-spaceblack hover:bg-opacity-90 text-white'
+      primary: 'bg-spaceblack hover:bg-opacity-80 text-white',
+      ghost: 'bg-transparent hover:bg-gray-100 text-gray-500 hover:text-spaceblack'
     },
     size: {
       default: 'px-4 py-2 text-sm'
@@ -22,9 +23,9 @@ type ButtonProps = ComponentProps<'button'> &
     children: React.ReactNode
   }
 
-export function Button({ children, size, className, ...props }: ButtonProps) {
+export function Button({ children, size, color, className, ...props }: ButtonProps) {
   return (
-    <button className={button({ size, className })} {...props}>
+    <button className={button({ size, color, className })} {...props}>
       {children}
     </button>
   )
