@@ -1,98 +1,91 @@
+'use client'
+
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { InvoicePreview } from "./invoice-preview";
+import { Label } from "@/components/ui/label";
+import { Datepicker } from "@/components/ui/datepicker";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { ChevronRightIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 export default function CreateInvoice() {
+  const [items, setItems] = useState([])
+
+  const addItem = () => {
+    setItems([...items, ''])
+  }
+
+  const handleItemChange = ({index, value}: any) => {
+    const newItems = [...items];
+    newItems[index] = value;
+    setItems(newItems);
+  }
+
   return (
     <div className="h-full">
       <div className="flex h-full">
-        <div className="w-1/2 flex flex-col">
-          <div className="bg-gray-50 h-full px-6 pt-6 flex items-center justify-center">
-            <div className="border p-14 rounded-t-xl bg-white drop-shadow-xl w-full h-full">
-              <h2 className="text-2xl font-bold mb-6 text-spaceblack">Invoice</h2>
-              <div className="mb-6">
-                <p className="text-sm text-gray-500">Client name</p>
-                <p className="text-md text-spaceblack">Amazon, Inc.</p>
+        <div className="w-1/2 flex flex-col bg-gray-100 h-full px-6 pt-6 items-center justify-center">
+          <InvoicePreview />
+        </div>
+
+        <div className="flex-1 border-l flex justify-center px-14 py-6">
+          <form className="max-w-xl w-full flex flex-col">
+            <h1 className="text-xl font-semibold text-spaceblack pb-6">Invoice details</h1>
+            <div className="flex flex-col gap-4 h-full">
+              <div className="flex flex-col gap-2 font-medium text-spaceblack">
+                <Label htmlFor="client">Client name</Label>
+                <Input type="text" id="client"/>
               </div>
-              <div className="mb-6">
-                <p className="text-sm text-gray-500">Invoice number</p>
-                <p className="text-md text-spaceblack">#0001</p>
+              <div className="flex flex-col gap-2 font-medium">
+                <Label htmlFor="invoice-number">Invoice number</Label>
+                <Input type="text" id="invoice-number" />
               </div>
-              <div className="flex justify-between mb-6">
-                <div>
-                  <p className="text-sm text-gray-500">Invoice date</p>
-                  <p className="text-md text-spaceblack">06/23/2024</p>
+              <div className="flex w-full gap-4 justify-between">
+                <div className="flex flex-col w-full gap-2 font-medium">
+                  <Label htmlFor="invoice-date">Invoice date</Label>
+                  <Datepicker />
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Due date</p>
-                  <p className="text-md text-spaceblack">07/22/2024</p>
+                <div className="flex flex-col w-full gap-2 font-medium">
+                  <Label htmlFor="due-date">Due date</Label>
+                  <Datepicker />
                 </div>
               </div>
-              <div className="mb-6">
-                <p className="text-sm text-gray-500">Amount</p>
-                <p className="text-md text-spaceblack">$200.00</p>
+              <div className="flex flex-col gap-2 font-medium">
+                <Label htmlFor="amount">Amount</Label>
+                <Input type="number" id="amount" />
               </div>
-              <div className="mb-6">
-                <p className="text-sm text-gray-500">Items</p>
-                <table className="w-full text-left text-sm border-collapse">
-                  <thead>
-                    <tr>
-                      <th className="border-b pb-2">Item</th>
-                      <th className="border-b pb-2">Description</th>
-                      <th className="border-b pb-2">Quantity</th>
-                      <th className="border-b pb-2">Price</th>
-                      <th className="border-b pb-2">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="pt-2 pb-2 border-b">Plumber</td>
-                      <td className="pt-2 pb-2 border-b">A good service done</td>
-                      <td className="pt-2 pb-2 border-b">2</td>
-                      <td className="pt-2 pb-2 border-b">$50.00</td>
-                      <td className="pt-2 pb-2 border-b">$100.00</td>
-                    </tr>
-                    <tr>
-                      <td className="pt-2 pb-2 border-b">Support</td>
-                      <td className="pt-2 pb-2 border-b">Great job</td>
-                      <td className="pt-2 pb-2 border-b">1</td>
-                      <td className="pt-2 pb-2 border-b">$100.00</td>
-                      <td className="pt-2 pb-2 border-b">$100.00</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="flex flex-col gap-2 font-medium">
+                <Label>Products and services</Label>
+                {items.map((item, index) => (
+                  <Input
+                    key={index}
+                    type="text"
+                    value={item}
+                    onChange={(e) => handleItemChange(index, e.target.value)}
+                    className="mb-2"
+                  />
+                ))}
+                <Button color="ghost" type="button" onClick={addItem}>
+                  <PlusIcon className="mr-2 h-4 w-4 stroke-2" />
+                  Add an item
+                </Button>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="flex-1 border-l flex justify-center px-14 py-6">
-          <form className="max-w-xl w-full">
-            <h1 className="text-xl font-semibold text-spaceblack pb-6">Invoice details</h1>
-            <div className="flex flex-col gap-4">
-              <label className="flex flex-col gap-2 font-medium text-spaceblack">
-                <span className="text-sm font-medium text-gray-500">Client name</span>
-                <Input type="text" placeholder="Amazon, Inc."/>
-              </label>
-              <label className="flex flex-col gap-2 font-medium">
-              <span className="text-sm font-medium text-gray-500">Invoice number</span>
-                <Input type="text" placeholder="e.g. #0001" />
-              </label>
-              <div className="flex w-full gap-4 justify-between">
-                <label className="flex flex-col w-full gap-2 font-medium">
-                <span className="text-sm font-medium text-gray-500">Invoice date</span>
-                  <Input type="date" placeholder="Amazon, Inc." />
-                </label>
-                <label className="flex flex-col w-full gap-2 font-medium">
-                <span className="text-sm font-medium text-gray-500">Due date</span>
-                  <Input type="date" />
-                </label>
-              </div>
-              <label className="flex flex-col gap-2 font-medium">
-              <span className="text-sm font-medium text-gray-500">Amount</span>
-                <Input type="number" />
-              </label>
+            <div className="flex justify-end gap-6">
+              <Link href={'/invoices'}>
+                <Button color="ghost">
+                  Cancel
+                </Button>
+              </Link>
+              <Button>
+                Continue
+                <ChevronRightIcon className="ml-2 h-4 w-4 stroke-2" />
+              </Button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  )
+  );
 }
