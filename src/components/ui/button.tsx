@@ -6,29 +6,33 @@ const button = tv({
   variants: {
     color: {
       primary: 'bg-spaceblack hover:bg-opacity-80 text-white',
-      ghost: 'bg-transparent hover:bg-gray-100 text-gray-500 hover:text-spaceblack'
+      ghost:
+        'bg-transparent hover:bg-gray-100 text-gray-500 hover:text-spaceblack',
     },
     size: {
-      default: 'px-4 py-2 text-sm'
-    }
+      default: 'px-4 py-2 text-sm',
+    },
   },
   defaultVariants: {
     color: 'primary',
-    size: 'default'
-  }
+    size: 'default',
+  },
 })
 
-type ButtonProps = ComponentProps<'button'> & 
+type ButtonProps = ComponentProps<'button'> &
   VariantProps<typeof button> & {
     children: React.ReactNode
   }
 
-export function Button({ children, size, color, className, ...props }: ButtonProps) {
+export function Button({
+  children,
+  size,
+  color,
+  className,
+  ...props
+}: ButtonProps) {
   return (
-    <button 
-      className={button({ size, color, className })} 
-      {...props}
-    >
+    <button className={button({ size, color, className })} {...props}>
       {children}
     </button>
   )
