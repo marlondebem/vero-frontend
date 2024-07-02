@@ -16,7 +16,7 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <nav className='border-r hidden lg:block'>
+    <nav className='border-r hidden lg:flex'>
       <ul className='flex flex-col gap-2 py-3 px-3'>
         {links.map((link, i) => (
           <Link key={i} href={link.href}>
